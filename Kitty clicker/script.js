@@ -1,5 +1,9 @@
+// Kitties are easily added by adding the name to this list, provided
+// that the name is also the name of the JPG file (ex. Socks.jpg)
 var kitties = ["Socks", "Bashful", "Cuddles", "Lemon", "Lieutenant Jeff"]
 
+// For each kitty in the list, a button in the navbar on the left will
+// be added and, when clicked on, it will display that cat with its info
 for(var i = 0; i < kitties.length; i++){
 	var kitty = kitties[i];
 	var catnav = document.getElementById('catnav');
@@ -24,6 +28,3 @@ for(var i = 0; i < kitties.length; i++){
 	item.appendChild(textnode);
 	catnav.appendChild(item);
 }
-
-// Currently not keeping track of the various kitties correctly, and 
-// only working with the last one

@@ -43,18 +43,15 @@ li:active {
 	margin-left: 151px;
 	height: 100%;
 	max-width: 650px;
-	background-color: yellow;
 }
 
 .cat{
 	width: 100%;
-	background-color: green;
 	position: relative;
 }
 
 img{
 	max-width: 100%;
-	background-color: red;
 }
 
 table{
