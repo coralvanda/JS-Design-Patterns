@@ -28,3 +28,5 @@ for(var i = 0; i < kitties.length; i++){
 	item.appendChild(textnode);
 	catnav.appendChild(item);
 }
+
+// Still resetting count for each cat when changed between using the navbar
