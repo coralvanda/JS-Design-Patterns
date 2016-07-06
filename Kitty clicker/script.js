@@ -1,6 +1,6 @@
 // Kitties are easily added by adding the name to this list, provided
 // that the name is also the name of the JPG file (ex. Socks.jpg)
-var kitties = ["Socks", "Bashful", "Cuddles", "Lemon", "Lieutenant Jeff"]
+var kitties = ["Socks", "Bashful", "Cuddles", "Lemon", "Lieutenant Jeff"];
 
 // For each kitty in the list, a button in the navbar on the left will
 // be added and, when clicked on, it will display that cat with its info
