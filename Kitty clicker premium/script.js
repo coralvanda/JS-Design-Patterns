@@ -1,4 +1,5 @@
 var model = {
+	active_kitty: null,
 	init: function(){
 		var names = ["Socks", "Bashful", "Cuddles", 
 			"Lemon", "Lieutenant Jeff"];
@@ -37,13 +38,23 @@ var model = {
 var octopus = {
 	init: function(){
 		model.init();
-		view.init();
+		var names = this.getNames();
+		this.setActiveKitty(names[0]);
+		view_main.init();
+		view_nav.init();
+	},
+	getActiveKitty: function() {
+		return model.active_kitty;
+	},
+	setActiveKitty: function(name) {
+		model.active_kitty = name;
 	},
 	getNames: function(){
 		return model.getNames();
 	},
-	countClick: function(name){
-		model.countClick(name);
+	countClick: function(){
+		var active_kitty = this.getActiveKitty();
+		model.countClick(active_kitty);
 	},
 	getCount: function(name) {
 		return model.getCount(name);
@@ -51,32 +62,48 @@ var octopus = {
 };
 
 
-var view = {
+var view_main = {
 	init: function(){
-		this.catnav = document.getElementById('catnav');
-		// stuff
-		view.render();
+		this.name 	= document.getElementById('kittyName');
+		this.pic 	= document.getElementById('kittyPic');
+		this.clicks = document.getElementById('kittyClicks');
+
+		this.pic.addEventListener('click', function() {
+			octopus.countClick();
+			view_main.render();
+		});
+
+		this.render();
 	},
 	render: function(){
-		var names = octopus.getNames();
+		var active_kitty = octopus.getActiveKitty();
+		this.name.textContent = active_kitty;
+		this.pic.src = "images/" + active_kitty + ".jpg";
+		this.clicks.textContent = octopus.getCount(active_kitty);
+	}
+};
+
+
+var view_nav = {
+	init: function() {
+		this.catnav = document.getElementById('catnav');
+		this.render();
+	},
+	render: function() {
+		var names, kitty, list_item;
+		this.catnav.innerHTML = '';
+		names = octopus.getNames();
 		for (i = 0; i < names.length; i++){
-			var kitty = names[i];
-			var list_item = document.createElement("LI");
+			kitty = names[i];
+			list_item = document.createElement("LI");
 			list_item.id = 'nav' + kitty;
+			list_item.textContent = kitty;
 			list_item.addEventListener('click', (function(kittyCopy) {
 				return function() {
-					var name = document.getElementById("kittyName");
-					name.innerHTML = kittyCopy;
-					var pic = document.getElementById("kittyPic");
-					pic.src = "images/" + kittyCopy + ".jpg";
-					pic.addEventListener('click', function() {
-						octopus.countClick(kittyCopy);
-						document.getElementById("kittyClicks").innerHTML = octopus.getCount(kittyCopy);
-					});
-				}
+					octopus.setActiveKitty(kittyCopy);
+					view_main.render();
+				};
 			})(kitty));
-			var textnode = document.createTextNode(kitty);
-			list_item.appendChild(textnode);
 			this.catnav.appendChild(list_item);
 		}
 	}
