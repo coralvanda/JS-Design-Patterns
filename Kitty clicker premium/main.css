@@ -39,6 +39,19 @@ li:active {
 	color: white;
 }
 
+#admin {
+	text-align: center;
+	background-color: red;
+	max-width: 65px;
+	border-radius: 10px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+#admin:hover {
+	text-decoration: underline;
+}
+
 .whole{
 	margin-left: 151px;
 	height: 100%;
@@ -57,4 +70,38 @@ img{
 table{
 	clear: both;
 	position: relative;
+}
+
+#admin_UI {
+	display: none;
+	text-align: right;
+}
+
+#admin_buttons {
+	display: none;
+	color: black;
+	border-radius: 10px;
+	max-width: 200px;
+	max-height: 40px;
+	margin-left: 475px;
+	text-align: center;
+}
+
+#admin_submit {
+	background-color: gray;
+	float: left;
+	margin-right: 10px;
+}
+
+#admin_cancel {
+	background-color: gray;
+	float: left;
+}
+
+#admin_submit:hover {
+	text-decoration: underline;
+}
+
+#admin_cancel:hover {
+	text-decoration: underline;
 }
