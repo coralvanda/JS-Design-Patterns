@@ -2,20 +2,22 @@ var model = {
 	active_kitty: null,
 	init: function(){
 		var names = ["Socks", "Bashful", "Cuddles", 
-			"Lemon", "Lieutenant Jeff"];
+			"Lemon", "Lieutenant Jeff", "Russian Blue"];
 		var clicks = {
 			"Socks": 0, 
 			"Bashful": 0, 
 			"Cuddles": 0, 
 			"Lemon": 0, 
-			"Lieutenant Jeff": 0
+			"Lieutenant Jeff": 0,
+			"Russian Blue": 0
 		};
 		var sources = {
 			"Socks": "images/Socks.jpg",
 			"Bashful": "images/Bashful.jpg",
 			"Cuddles": "images/Cuddles.jpg",
 			"Lemon": "images/Lemon.jpg",
-			"Lieutenant Jeff": "images/Lieutenant Jeff.jpg"
+			"Lieutenant Jeff": "images/Lieutenant Jeff.jpg",
+			"Russian Blue": "images/Russian Blue.jpg"
 		};
 		localStorage.setItem('names', JSON.stringify(names));
 		localStorage.setItem('clicks', JSON.stringify(clicks));
@@ -50,8 +52,7 @@ var model = {
 		return sources[name];
 	},
 	getNames: function() {
-		var names = localStorage.getItem('names');
-		names = JSON.parse(names);
+		var names = model.getParsedNames();
 		return names;
 	},
 	changeName: function(name) {
@@ -92,8 +93,8 @@ var octopus = {
 		return model.getNames();
 	},
 	countClick: function(){
-		var active_kitty = this.getActiveKitty();
-		model.countClick(active_kitty);
+		var kitty = this.getActiveKitty();
+		model.countClick(kitty);
 	},
 	getCount: function(name) {
 		return model.getCount(name);
@@ -102,6 +103,7 @@ var octopus = {
 		return model.getSource(name);
 	},
 	changeCatInfo: function(name, URL, clickCount) {
+		this.setActiveKitty(name);
 		model.changeName(name);
 		model.changeSource(URL);
 		model.changeClicks(clickCount);
@@ -167,7 +169,7 @@ var view_admin = {
 		admin_buttons	= document.getElementById('admin_buttons');
 		admin_submit 	= document.getElementById('admin_submit');
 		admin_cancel	= document.getElementById('admin_cancel');
-		admin_button.addEventListener('click', function() {
+		admin_button.addEventListener('click', function() {	
 			if (admin_UI.style.display == 'none') {
 				admin_UI.style.display = 'block';
 			}
@@ -182,17 +184,21 @@ var view_admin = {
 			}
 		});
 		admin_submit.addEventListener('click', function() {
+			active_kitty = octopus.getActiveKitty();
 			name 	= document.getElementById('form_name').value;
 			URL 	= document.getElementById('form_url').value;
-			clicks 	= parseInt(document.getElementById('form_clicks').value);
+			clicks 	= document.getElementById('form_clicks').value;
 			if (name == null || name == '') {
-				name = octopus.getActiveKitty();
+				name = active_kitty;
 			}
 			if (URL == null || URL == '') {
-				URL = octopus.getSource();
+				URL = octopus.getSource(active_kitty);
 			}
 			if (clicks == null || clicks == '') {
-				clicks = octopus.getCount();
+				clicks = octopus.getCount(active_kitty);
+			}
+			else {
+				clicks = parseInt(clicks);
 			}
 			octopus.changeCatInfo(name, URL, clicks);
 		});
@@ -205,5 +211,3 @@ var view_admin = {
 
 
 octopus.init();
-
-//TODO: fix check for blank fields in admin menu
